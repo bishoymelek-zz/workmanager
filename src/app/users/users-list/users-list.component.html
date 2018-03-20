@@ -1,0 +1,103 @@
+<h1>Users list</h1>
+
+
+<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form  (ngSubmit)="createNote(data)" #data="ngForm">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="name">
+       First name
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" ngModel  id="name" name="firstName" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="name1">
+       Last name
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="name1" ngModel name="lastName" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="select">
+        user type
+      </label>
+      <select class="select form-control" id="select" name="type" ngModel>
+       <option value="admin">
+        Admin
+       </option>
+       <option value="planner">
+        Planner
+       </option>
+       <option value="standard">
+         Standard
+       </option>
+      </select>
+     </div>
+
+     <div class="form-group ">
+      <label class="control-label requiredField" for="email">
+       Email
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="email" name="email" ngModel type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="userName">
+       Username
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="userName" name="userName" ngModel type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="password">
+       password
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="password" name="password" ngModel type="password"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="workCenter">
+       Work Center
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="workCenter" name="workCenter" ngModel type="text"/>
+     </div>
+     <div class="form-group">
+      <div>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Submit
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+<hr>
+
+
+
+<div *ngFor="let user of users | async">
+  <user-detail [user]="user"></user-detail>
+</div>

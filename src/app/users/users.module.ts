@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { NoteService } from './note.service';
+import { NoteService } from './user.service';
 
-import { NotesListComponent } from './notes-list/notes-list.component';
-import { NoteDetailComponent } from './note-detail/note-detail.component';
+import { NotesListComponent } from './users-list/users-list.component';
+import { NoteDetailComponent } from './user-detail/user-detail.component';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
