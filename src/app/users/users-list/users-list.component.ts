@@ -22,7 +22,6 @@ export class NotesListComponent implements OnInit {
   ngOnInit() {
     // this.notes = this.noteService.getData()
     this.users = this.noteService.getSnapshot();
-    console.log("this.users",this.users);
   }
 
   createNote(data: NgForm) {

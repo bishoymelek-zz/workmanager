@@ -25,16 +25,15 @@ interface NewUser {
 @Injectable()
 export class NoteService {
 
-  notesCollection: AngularFirestoreCollection<User>;
   noteDocument: AngularFirestoreDocument<Node>;
   userCollections: AngularFirestoreCollection<User>;
 
   constructor(private afs: AngularFirestore, public notify: NotifyService) {
-    this.notesCollection = this.afs.collection('users', (ref) => ref.orderBy('desc').limit(5));
+    this.userCollections = this.afs.collection('users', (ref) => ref.orderBy('desc').limit(5));
   }
 
   getData(): Observable<User[]> {
-    return this.notesCollection.valueChanges();
+    return this.userCollections.valueChanges();
   }
 
   getSnapshot(): Observable<User[]> {
@@ -45,13 +44,15 @@ export class NoteService {
   }
 
   getNote(id: string) {
-    return this.afs.doc<User>(`Users/${id}`);
+    return this.afs.doc<User>(`users/${id}`);
   }
 
-  create(content:any) {
+  create(content: any) {
+    let uid = this.afs.createId();
+
     if (content.firstName && content.lastName && content.password && content.userName && content.workCenter) {
       const user = {
-        id: 4343,
+        id: uid,
         dateCreated: "20/20",
         firstName: content.firstName,
         functionLocation: '',
@@ -65,7 +66,11 @@ export class NoteService {
         // time: ,
       };
       this.notify.update('Added Successfully!', 'success');
-      return this.notesCollection.add(user);
+      this.userCollections.doc(uid).set(user).then(data => {
+        console.log(data)
+      });
+
+      // return this.notesCollection.add(user);
     } else {
       this.notify.update("please fill all the input fields first", 'error');
       return;

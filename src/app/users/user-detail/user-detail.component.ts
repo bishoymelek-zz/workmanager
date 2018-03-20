@@ -1,30 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { NoteService } from '../user.service';
 
 import { User } from '../user-model';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss'],
 })
-export class NoteDetailComponent {
+export class NoteDetailComponent implements OnInit {
 
   @Input()
   user: User;
+  users: Observable<User[]>;
 
   constructor(private noteService: NoteService) { }
 
-  // addHeartToNote(val: number) {
-  //   if (this.user.id) {
-  //     this.noteService.updateNote(this.user.id, {  });
-  //   } else {
-  //     console.error('Note missing ID!');
-  //   }
-  // }
+  ngOnInit() {
+    this.users = this.noteService.getSnapshot();
+  }
 
-  deleteNote(id: string) {
+  deleteUser(id: string) {
+    console.log("HIIIII", id)
     this.noteService.deleteNote(id);
   }
 
