@@ -29,9 +29,9 @@ export class userService {
     this.userCollections = this.afs.collection('users', (ref) => ref.orderBy('desc').limit(5));
   }
 
-  getData(): Observable<User[]> {
-    return this.userCollections.valueChanges();
-  }
+  // getData(): Observable<User[]> {
+  //   return this.userCollections.valueChanges();
+  // }
 
   getSnapshot(): Observable<User[]> {
     // ['added', 'modified', 'removed']

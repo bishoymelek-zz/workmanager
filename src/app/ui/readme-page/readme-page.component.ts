@@ -12,11 +12,11 @@ export class ReadmePageComponent {
   latest_users: Observable<User[]>;
   user_num: Observable<User[]>;
   constructor(private users_service: userService) { }
-
+ users_total_number:any;
   ngOnInit() {
     this.latest_users = this.users_service.getLatestRegisteredUsers();
-    this.user_num = this.users_service.getSnapshot();
-    this.user_num.subscribe(result => {console.log(result.length)});
+    this.user_num = this.users_service.getSnapshot();    
+    this.user_num.subscribe(result => {this.users_total_number = result.length});
     console.log(this.latest_users)
   }
 }
