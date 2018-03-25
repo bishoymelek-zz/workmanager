@@ -1,0 +1,96 @@
+<!-- <div>
+  <h3>{{ user.firstName }}</h3>
+  <span class="button is-small is-info" (click)='addHeartToNote(user.hearts)'>
+    Heart <i class="fa fa-heart"></i>
+  </span>
+  <span class="button is-small is-danger" (click)='deleteNote(note?.id)'>Delete</span>
+  <p>This note has been hearted {{ user.hearts || 0 }} times.</p>
+</div> -->
+
+
+
+<div class="table-responsive">
+
+  <table class="table table-striped table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>
+          Id
+        </th>
+        <th>
+          First name
+        </th>
+        <th>
+          Last Name
+        </th>
+        <th>
+          Function Location
+        </th>
+        <th>
+          Last changed
+        </th>
+        <th>
+          Planner group
+        </th>
+        <th>
+          Type
+        </th>
+        <th>
+          Username
+        </th>
+        <th>
+          Work centre
+        </th>
+        <th>
+          Date created
+        </th>
+        <th style="color:chartreuse;">
+            Edit
+          </th>
+          <th style="color:red;">
+              Delete
+            </th>
+            </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | async">
+        <td>
+          {{ user.id }}
+        </td>
+        <td>
+          {{user.firstName}}
+        </td>
+        <td>
+          {{user.lastName}}
+        </td>
+        <td>
+          {{user.functionLocation}}
+        </td>
+        <td>
+          {{user.lastChanged}}
+        </td>
+        <td>
+          {{user.plannerGroup}}
+        </td>
+        <td>
+          {{user.type}}
+        </td>
+        <td>
+          {{user.userName}}
+        </td>
+        <td>
+          {{user.workCentre}}
+        </td>
+        <td>
+          {{user.dateCreated}}
+        </td>
+        <td style="color:chartreuse;">
+            <button type=button class="btn btn-primary" (click)='editUser(user.id)'>Edit</button>
+          </td>
+          <td style="color:red;">
+              <button type=button class="btn btn-primary" (click)='deleteUser(user.id)'>Delete</button>
+            </td>
+            </tr>
+    </tbody>
+  </table>
+</div>
