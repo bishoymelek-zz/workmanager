@@ -2,8 +2,6 @@ nav {
   border-bottom: 1px solid #E4E4E4;
   box-shadow: 0 0 4px rgba(0,0,0,.1), 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
-  padding: 0 5vw;
-  padding-right: 60px;
   .nav-item {
     font-weight: normal;
     transition: color 0.3s ease;
@@ -11,13 +9,39 @@ nav {
       font-color: #1c90f3;
     }
   }
-  *{
-    color:White;
-
+  *{  color:White;
   }
+  
 }
 .loggedin_bar{
   *{
     float:left;
   }
+}
+.nav{
+  display: -webkit-box!important;
+  padding:0px;
+}
+.nav-toggle span {
+  background-color:white;
+}
+  @media screen and (max-width: 768px){
+  .nav-menu.nav-right {
+    color: black;
+      // background-color:transparent!important;
+      box-shadow: 0 4px 7px rgba(10,10,10,.1);
+      left: 0;
+      display: block;
+      right: 0;
+      top: 100%;
+      position: absolute;
+  }
+  .nav-menu.nav-right *{
+    color: black;}
+    
+}
+.nav-toggle {
+background-color: transparent!important;
+border: 0px;
+
 }

@@ -13,7 +13,7 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { TopNavComponent } from '../top-nav/top-nav.component';
 import { FooterNavComponent } from '../footer-nav/footer-nav.component';
-import { ReadmePageComponent } from '../readme-page/readme-page.component';
+import { HomePageComponent } from '../home-page/home-page.component';
 import { NotificationMessageComponent } from '../notification-message/notification-message.component';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { NotificationMessageComponent } from '../notification-message/notificati
     TopNavComponent,
     FooterNavComponent,
     UserFormComponent,
-    ReadmePageComponent,
+    HomePageComponent,
     NotificationMessageComponent,
   ],
   exports: [

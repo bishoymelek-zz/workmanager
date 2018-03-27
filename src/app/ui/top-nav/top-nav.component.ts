@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'top-nav',
@@ -8,14 +8,13 @@ import { AuthService } from '../../core/auth.service';
 })
 export class TopNavComponent {
 
-  show = true;
-  constructor(public auth: AuthService) { }
+  // show = true;
+  constructor(public auth: AppComponent) { }
 
-  toggleCollapse() {
-    this.show = !this.show;
-  }
   logout() {
-    this.auth.signOut();
+    localStorage.clear();
+    window.location.reload();
+
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="box" >
-  <div *ngIf="auth.user | async; then authenticated else guest">
+  <div *ngIf="auth.user; then authenticated ;else guest">
           <!-- template will replace this div -->
   </div>
 </div>

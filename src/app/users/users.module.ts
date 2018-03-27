@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { userService } from './user.service';
 
-import { NotesListComponent } from './users-list/users-list.component';
+import { usersListComponent } from './users-list/users-list.component';
 import { NoteDetailComponent } from './user-detail/user-detail.component';
 
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -19,7 +19,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     AngularFirestoreModule.enablePersistence(),
   ],
   declarations: [
-    NotesListComponent,
+    usersListComponent,
     NoteDetailComponent,
   ],
   providers: [userService],

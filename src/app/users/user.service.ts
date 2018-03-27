@@ -34,19 +34,32 @@ export class userService {
   // }
 
   getSnapshot(): Observable<User[]> {
-    // ['added', 'modified', 'removed']
-    let userCollections = this.afs.collection<User>('users');
-    let items = userCollections.valueChanges();
-    return items;
+    let currentUser = JSON.parse(localStorage.getItem('userData'));
+    let currentUserRole = currentUser.type;
+    if (currentUserRole === 'owner') {
+      let userCollections = this.afs.collection<User>('users', (ref) => ref.where("type", "==", 'admin' || 'planner' || 'standard'));
+      let items = userCollections.valueChanges();
+      return items;
+    } else if (currentUserRole === 'admin') {
+      let userCollections = this.afs.collection<User>('users', (ref) => ref.where("type", "==",  'planner' || 'standard'));
+      let items = userCollections.valueChanges();
+      return items;
+    }else {
+      return ;
+    }
   }
   getLatestRegisteredUsers(): Observable<User[]> {
-    // ['added', 'modified', 'removed']
-    let userCollections = this.afs.collection<User>('users', (ref) => ref.limit(6));
+    let userCollections = this.afs.collection<User>('users', (ref) => ref.limit(6).orderBy('dateCreated', 'desc'));
     let items = userCollections.valueChanges();
     return items;
   }
+  LoginUser(userName): Observable<User[]> {
+    let UserInfo = this.afs.collection<User>('users', (ref) => ref.where("userName", "==", userName));
+    let userData = UserInfo.valueChanges();
+    return userData;
+  }
+
   getPlannerGroups(): Observable<planner_group[]> {
-    // ['added', 'modified', 'removed']
     let plannerGroups = this.afs.collection<planner_group>('customerInfo');
     let plannerGroupsItems = plannerGroups.valueChanges();
     return plannerGroupsItems;
@@ -57,7 +70,6 @@ export class userService {
   }
 
   create(content: any) {
-    console.log(content);
     let uid = this.afs.createId();
     if (content.firstName && content.lastName && content.password && content.userName && content.workCenter) {
       const user = {
