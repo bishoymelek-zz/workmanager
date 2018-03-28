@@ -21,54 +21,62 @@ interface NewUser {
 
 @Injectable()
 export class userService {
-
-  noteDocument: AngularFirestoreDocument<Node>;
   userCollections: AngularFirestoreCollection<User>;
-
   constructor(private afs: AngularFirestore, public notify: NotifyService) {
     this.userCollections = this.afs.collection('users', (ref) => ref.orderBy('desc').limit(5));
   }
+  getUsers = new Observable((observer) => {
+    let hi = this.getSnapshot().then(hi => {
+      observer.next(hi)
+      return observer.complete()
+    });
+  })
 
-  // getData(): Observable<User[]> {
-  //   return this.userCollections.valueChanges();
-  // }
-
-  getSnapshot(): Observable<User[]> {
-    let currentUser = JSON.parse(localStorage.getItem('userData'));
-    let currentUserRole = currentUser.type;
-    if (currentUserRole === 'owner') {
-      let userCollections = this.afs.collection<User>('users', (ref) => ref.where("type", "==", 'admin' || 'planner' || 'standard'));
-      let items = userCollections.valueChanges();
-      return items;
-    } else if (currentUserRole === 'admin') {
-      let userCollections = this.afs.collection<User>('users', (ref) => ref.where("type", "==",  'planner' || 'standard'));
-      let items = userCollections.valueChanges();
-      return items;
-    }else {
-      return ;
-    }
+  getSnapshot() {
+    return new Promise((resolve, reject) => {
+      let currentUser = JSON.parse(localStorage.getItem('userData'));
+      let currentUserRole = currentUser.type;
+      if (currentUserRole === 'owner') {
+        let adminData = this.afs.collection<User>('users', (ref) => ref.where("type", "==", 'admin'));
+        let plannerData = this.afs.collection<User>('users', (ref) => ref.where("type", "==", 'planner'));
+        let standardData = this.afs.collection<User>('users', (ref) => ref.where('type', '==', 'standard'));
+        let adminU = adminData.valueChanges().subscribe(admins => {
+          let plannerU = plannerData.valueChanges().subscribe(planners => {
+            let standardUsers = standardData.valueChanges().subscribe(standardU => {
+              let admin_planner = planners.concat(admins);
+              let finalData = admin_planner.concat(standardU);
+              resolve(finalData);
+            })
+          })
+        });
+      } else if (currentUserRole === 'admin') {
+        let plannerData = this.afs.collection<User>('users', (ref) => ref.where("type", "==", 'planner'));
+        let standardData = this.afs.collection<User>('users', (ref) => ref.where('type', '==', 'standard'));
+        let plannerU = plannerData.valueChanges().subscribe(planners => {
+          let standardUsers = standardData.valueChanges().subscribe(standardU => {
+            let finalData = planners.concat(standardU);
+            resolve(finalData);
+          })
+        });
+      } else {
+        return false;
+      }
+    });
   }
-  getLatestRegisteredUsers(): Observable<User[]> {
-    let userCollections = this.afs.collection<User>('users', (ref) => ref.limit(6).orderBy('dateCreated', 'desc'));
-    let items = userCollections.valueChanges();
-    return items;
-  }
+  
   LoginUser(userName): Observable<User[]> {
     let UserInfo = this.afs.collection<User>('users', (ref) => ref.where("userName", "==", userName));
     let userData = UserInfo.valueChanges();
     return userData;
   }
-
   getPlannerGroups(): Observable<planner_group[]> {
     let plannerGroups = this.afs.collection<planner_group>('customerInfo');
     let plannerGroupsItems = plannerGroups.valueChanges();
     return plannerGroupsItems;
   }
-
-  getNote(id: string) {
+  getUser(id: string) {
     return this.afs.doc<User>(`users/${id}`);
   }
-
   create(content: any) {
     let uid = this.afs.createId();
     if (content.firstName && content.lastName && content.password && content.userName && content.workCenter) {
@@ -103,12 +111,7 @@ export class userService {
     let year = date.getFullYear();
     return day + '/' + monthIndex + '/' + year;
   }
-
-  updateNote(id: string, data: Partial<User>) {
-    return this.getNote(id).update(data);
-  }
-
-  deleteNote(id: string) {
-    return this.getNote(id).delete();
+  deleteUser(id: string) {
+    return this.getUser(id).delete();
   }
 }

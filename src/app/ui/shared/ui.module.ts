@@ -12,7 +12,6 @@ import { UserLoginComponent } from '../user-login/user-login.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { TopNavComponent } from '../top-nav/top-nav.component';
-import { FooterNavComponent } from '../footer-nav/footer-nav.component';
 import { HomePageComponent } from '../home-page/home-page.component';
 import { NotificationMessageComponent } from '../notification-message/notification-message.component';
 
@@ -29,14 +28,12 @@ import { NotificationMessageComponent } from '../notification-message/notificati
     UserLoginComponent,
     UserProfileComponent,
     TopNavComponent,
-    FooterNavComponent,
     UserFormComponent,
     HomePageComponent,
     NotificationMessageComponent,
   ],
   exports: [
     TopNavComponent,
-    FooterNavComponent,
     UserProfileComponent,
     NotificationMessageComponent,
   ],
