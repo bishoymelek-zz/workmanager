@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { userService } from '../../users/user.service';
+import { userService } from '../../users/user-service/user.service';
 import { User } from '../../users/user-model';
 import { Observable } from 'rxjs/Observable';
 

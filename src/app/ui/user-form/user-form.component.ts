@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '../../core/auth.service';
-import { userService } from '../../users/user.service';
+import { userService } from '../../users/user-service/user.service';
 import { Router } from '@angular/router';
 
 type UserFields = 'email' | 'password';

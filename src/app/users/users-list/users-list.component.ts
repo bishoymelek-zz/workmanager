@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-import { userService } from '../user.service';
-
+import { userService } from '../user-service/user.service';
 import { User } from '../user-model';
 import { planner_group } from '../planner-group';
-
 import { Observable } from 'rxjs/Observable';
 import { NgForm } from '@angular/forms';
 import { NotifyService } from '../../core/notify.service';
@@ -21,24 +18,23 @@ export class usersListComponent implements OnInit {
   plannerGroups: Observable<planner_group[]>;
 
   constructor(private userService: userService, public notify: NotifyService, public router: Router) {
-    let isLoggedIn = JSON.parse(localStorage.getItem('userData'));
-    console.log(isLoggedIn.type);
-    if (isLoggedIn.type != 'admin' && isLoggedIn.type != 'owner') {
-      if (isLoggedIn.type === 'owner') {
+    let UserData = JSON.parse(localStorage.getItem('userData'));
+    if (UserData.type === 'admin' || UserData.type === 'owner') {
+      if (UserData.type === 'owner') {
         this.owner = false;
       } else {
         this.owner = true;
       }
-      this.notify.update('You must be logged in!', 'error');
+    }else{
+      this.notify.update('Sorry,You do not have a permission' , 'error');
       this.router.navigate(['/']);
-    }
 
+    }
   }
   ngOnInit() {
     this.plannerGroups = this.userService.getPlannerGroups();
-    // this.users = this.userService.getSnapshot();
   }
   createUser(data: any) {
-    let answer = this.userService.create(data.value);
+    this.userService.createUser(data.value);
   }
 }

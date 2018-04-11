@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { User } from './user-model';
-import { planner_group } from './planner-group';
+import { User } from './../user-model';
+import { planner_group } from './../planner-group';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { NotifyService } from '../core/notify.service';
+import { NotifyService } from '../../core/notify.service';
 interface NewUser {
   id?: number;
   dateCreated: any,
-  firstName: string,
-  functionLocation: string,
   lastChanged: string,
+  firstName: string,
   lastName: string,
+  userName: string,
   password: string,
   plannerGroup: string,
   type: string,
-  userName: string,
+  functionLocation: string,
   workCentre: string,
 }
-
 @Injectable()
 export class userService {
   userCollections: AngularFirestoreCollection<User>;
@@ -26,8 +25,8 @@ export class userService {
     this.userCollections = this.afs.collection('users', (ref) => ref.orderBy('desc').limit(5));
   }
   getUsers = new Observable((observer) => {
-    let hi = this.getSnapshot().then(hi => {
-      observer.next(hi)
+    let dataObs = this.getSnapshot().then(data => {
+      observer.next(data)
       return observer.complete()
     });
   })
@@ -77,7 +76,10 @@ export class userService {
   getUser(id: string) {
     return this.afs.doc<User>(`users/${id}`);
   }
-  create(content: any) {
+  deleteUser(id: string) {
+    return this.getUser(id).delete();
+  }
+  createUser(content: any) {
     let uid = this.afs.createId();
     if (content.firstName && content.lastName && content.password && content.userName && content.workCenter) {
       const user = {
@@ -110,8 +112,5 @@ export class userService {
     let monthIndex = date.getMonth();
     let year = date.getFullYear();
     return day + '/' + monthIndex + '/' + year;
-  }
-  deleteUser(id: string) {
-    return this.getUser(id).delete();
   }
 }

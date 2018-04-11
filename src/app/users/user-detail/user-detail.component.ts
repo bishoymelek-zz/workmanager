@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-declare var jquery: any;
-declare var $: any;
+// declare var jquery: any;
+// declare var $: any;
 
-import { userService } from '../user.service';
+import { userService } from '../user-service/user.service';
 import { Subject } from 'rxjs/Subject';
 
 import { User } from '../user-model';
@@ -20,7 +20,7 @@ export interface Msg {
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss'],
 })
-export class NoteDetailComponent implements OnInit {
+export class UserDetailComponent implements OnInit {
 
   @Input()
   user: User;
@@ -28,15 +28,9 @@ export class NoteDetailComponent implements OnInit {
   public itemDoc: AngularFirestoreDocument<User>;
 
   constructor(private notifyme: NotifyService, private userService: userService, private afs: AngularFirestore) { }
-
   ngOnInit() {
-    // this.users = this.userService.getSnapshot();
   this.users =  this.userService.getUsers;
-    // this.users.subscribe(hi=>{
-      console.log(this.users);
-    // })
   }
-
   deleteUser(id: string) {
     if (confirm("delete this user ?")) {
       this.userService.deleteUser(id);
@@ -48,10 +42,10 @@ export class NoteDetailComponent implements OnInit {
       [name]: newValue
     })
       .then(function () {
-        console.log("Document successfully updated!");
+        alert("Document successfully updated!");
       })
       .catch(function (error) {
-        console.error("Error updating document: ", error);
+        alert("Error updating document");
       });
   }
 }
